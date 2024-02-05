@@ -7,10 +7,12 @@ local GBGroup = augroup('GB', {})
 
 local autocmd = vim.api.nvim_create_autocmd
 
+
 autocmd('LspAttach', {
     group = GBGroup,
     callback = function(e)
-        -- if client.name == "omnisharp" then client.server_capabilities.semanticTokensProvider = nil end
+        vim.cmd('set noshellslash')
+        if e.name == "omnisharp" then e.server_capabilities.semanticTokensProvider = nil end
         local opts = { buffer = e.buf}
         vim.keymap.set("n","gd",function() vim.lsp.buf.definition() end, opts)
         vim.keymap.set("n","K",function() vim.lsp.buf.hover() end, opts)
@@ -24,3 +26,9 @@ autocmd('LspAttach', {
         vim.keymap.set("n","<C-h>",function() vim.lsp.buf.signature_help() end, opts)
     end
     })
+
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--	callback = function()
+--		vim.cmd("set noshellslash")
+--	end,
+-- })

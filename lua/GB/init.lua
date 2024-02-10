@@ -7,6 +7,19 @@ local GBGroup = augroup('GB', {})
 
 local autocmd = vim.api.nvim_create_autocmd
 
+autocmd("VimEnter", {
+  group = augroup("capslockstuff", { clear = true }),
+  callback = function()
+    vim.cmd("!setxkbmap -option caps:escape")
+  end,
+})
+
+autocmd("VimLeave", {
+  group = augroup("capslockstuff", { clear = true }),
+  callback = function()
+    vim.cmd("!setxkbmap -option")
+  end,
+})
 
 autocmd('LspAttach', {
     group = GBGroup,
